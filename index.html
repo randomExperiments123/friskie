@@ -29,10 +29,47 @@
 
 <!-- Inline CSS -->
 <style>
-body {
+:root 
+{
+  --primary-color: #ff3366;
+  --secondary-color: #6633ff;
+  /* --accent-color: #00b894;  */
+  --accent-color: #33ffcc;
+  --accent-color-30: #24b38f;
+  --forth-color-dark: #ccff33;
+
+  --body-background-color: #fff0f5;
+  --hero-background-color: #fff; 
+  --text-color: #333;
+
+  --social-proof-color: var(--primary-color);
+
+  --email-background-color: var(--accent-color-30);
+  --email-input-border-color: var(--email-background-color);
+  --email-message-color: var(--primary-color);
+  --email-button-color: #fff;
+  --email-button-background-color: var(--email-background-color);
+  --email-button-hover-color: #019875;
+  --email-button-active-color: #017f5b;
+  
+  --chat-left-color: #000;
+  --chat-left-background-color: #ffe6f0;
+  --chat-right-color: #fff; 
+  --chat-right-background-color: #f57e9c; 
+
+  --chat-typing-color: #000;
+  --chat-typing-background-color: #ffe6f0;
+  --chat-typing-threedots-color: var(--primary-color);
+
+  --footer-color: #aaa;
+}
+
+
+body 
+{
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #fff0f5;
+  background: var(--body-background-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,11 +78,11 @@ body {
 
 .hero-card 
 {
-    height: 90vh; /* full viewport height */
-    justify-content: center; /* vertically center content */
-    padding: 20px 10px; /* optional slight padding */
+  height: 90vh; /* full viewport height */
+  justify-content: center; /* vertically center content */
+  padding: 20px 10px; /* optional slight padding */
 
-  background: #fff;
+  background: var(--hero-background-color);
   max-width: 700px;
   width: 95%; 
   border-radius: 25px;
@@ -58,9 +95,10 @@ body {
 
 .brand { font-size: 2rem; margin: 0; text-align:center;}
 .tagline { font-size: 1rem; margin: 5px 0; text-align:center;}
-.social-proof { font-size: 0.85rem; color: #ff3366; margin-bottom: 15px; text-align:center;}
+.social-proof { font-size: 0.85rem; color: var(--social-proof-color); margin-bottom: 15px; text-align:center;}
 
-#chat-window {
+#chat-window 
+{
   width: 100%;
   height: 350px;
   overflow-y: auto;
@@ -72,7 +110,8 @@ body {
   box-sizing: border-box;
 }
 
-.bubble {
+.bubble 
+{
   max-width: 70%;
   padding: 10px 15px;
   border-radius: 15px;
@@ -82,37 +121,41 @@ body {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.left {
-  background: #ffe6f0;
-  color: #000;
+.left 
+{
+  background: var(--chat-left-background-color);
+  color: var(--chat-left-color);
   align-self: flex-start;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.right {
-  background: #ff3366;
-  color: #fff;
+.right 
+{
+  background: var(--chat-right-background-color);
+  color: var(--chat-right-color);
   align-self: flex-end;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.typing {
+.typing 
+{
   display: flex;
   align-items: center;
   gap: 5px;
   padding: 10px 15px;
   border-radius: 15px;
-  background: #ffe6f0;
+  background: var(--chat-typing-background-color);
   width: 50px;
   justify-content: center;
   align-self: flex-start;
 }
 
-.typing span {
+.typing span 
+{
   display: inline-block;
   width: 6px;
   height: 6px;
-  background: #ff3366;
+  background: var(--chat-typing-threedots-color);
   border-radius: 50%;
   animation: bounce 1s infinite;
 }
@@ -120,12 +163,14 @@ body {
 .typing span:nth-child(2) { animation-delay: 0.2s; }
 .typing span:nth-child(3) { animation-delay: 0.4s; }
 
-@keyframes bounce {
+@keyframes bounce 
+{
   0%, 80%, 100% { transform: translateY(0); }
   40% { transform: translateY(-6px); }
 }
 
-.email-container { 
+.email-container 
+{ 
   margin-top: 10px; 
   width: 100%; 
   display: grid;
@@ -137,21 +182,24 @@ body {
   padding-top: 15px;
 }
 
-.email-container input { 
+.email-container input 
+{ 
   padding: 12px; 
   width: 100%;  
   border-radius: 10px; 
-  border: 1px solid #ccc; 
+  border: 1px solid var(--email-input-border-color);
   font-size: 1rem;
   box-sizing: border-box;
 }
+ 
 
-.email-container button { 
+.email-container button 
+{ 
   padding: 12px 25px;
   border: none; 
   border-radius: 10px; 
-  background: #00b894; 
-  color: #fff; 
+  background: var(--email-button-background-color); 
+  color: var(--email-button-color); 
   font-weight: 600; 
   cursor: pointer; 
   font-size: 1rem;
@@ -159,12 +207,14 @@ body {
   width: 100%;
 }
 
-.email-container button:hover { 
-  background: #019875; 
+.email-container button:hover 
+{ 
+  background: var(--email-button-hover-color); 
   transform: translateY(-2px); 
 }
-.email-container button:active { 
-  background: #017f5b; 
+.email-container button:active 
+{ 
+  background: var(--email-button-active-color); 
   transform: translateY(0); 
 }
 
@@ -184,12 +234,13 @@ body {
   .email-container button { width: auto; font-size:1rem;}
 }
 
-.email-msg { color: #ff3366; margin-top: 5px; font-size: 0.9rem; width: 100%; text-align: center; }
+.email-msg { color: var(--email-message-color); margin-top: 5px; font-size: 0.9rem; width: 100%; text-align: center; }
 
-footer.footer { 
+footer.footer 
+{ 
   font-size: 0.75rem; 
   margin-top: 10px; 
-  color: #aaa; 
+  color: var(--footer-color); 
   text-align: center;
 }
 </style>
@@ -197,8 +248,8 @@ footer.footer {
 <body>
 
 <div id="hero-card" class="hero-card">
-    <h1 class="brand">Time to get friskie</h1>
-    <p class="tagline">Fun, flirty, no-strings-attached...</p>
+    <h1 class="brand">Get friskie</h1>
+    <p class="tagline">Naughty, fun, flirty, no-strings-attached...</p>
     <p class="social-proof">🔥 people near you are active</p>
 
     <div id="chat-window"></div>
@@ -210,7 +261,7 @@ footer.footer {
     </div>
 
     <footer class="footer">
-      Strictly for 21+ adults only<br>
+      Strictly 21+ adults only!<br>
       Private. Discreet. Secure.<br>
       © 2026 frisk.ie All rights reserved.
     </footer>
@@ -222,12 +273,14 @@ const conversations = [
   [
     { side: "left", text: "Hey there 😉" },
     { side: "right", text: "Hi!" },
-    { side: "left", text: "Looking for some fun?" },
+    { side: "left", typing: true },
+    { side: "left", text: "Looking for some fun?" }, 
     { side: "right", text: "Maybe 😏" }
   ],
   [
-    { side: "left", text: "You look interesting 😘" },
+    { side: "left", text: "You look interesting 😘" }, 
     { side: "right", text: "Thanks!" },
+    { side: "left", typing: true },
     { side: "left", text: "Want to chat a bit?" }
   ]
 ];
