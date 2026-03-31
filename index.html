@@ -293,7 +293,8 @@ const emailMsg = document.getElementById("email-msg");
 const convo = conversations[Math.floor(Math.random()*conversations.length)];
 let index = 0;
 
-function showMessage() {
+function showMessage() 
+{
   if (index >= convo.length) return;
   const msgData = convo[index];
   
@@ -318,24 +319,53 @@ function showMessage() {
 }
 showMessage();
 
+function addMessageToChatAfterSubmit() 
+{ 
+  const typingEl = document.createElement('div');
+    typingEl.className = 'typing';
+    typingEl.innerHTML = '<span></span><span></span><span></span>';
+    chatWindow.appendChild(typingEl);
+    chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
+
+    setTimeout(() => {
+      chatWindow.removeChild(typingEl);
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble left';
+      bubble.textContent = "🎉 Okay, you're offically on the list now. Keep an eye on your inbox for updates! 😉";
+      chatWindow.appendChild(bubble);
+      setTimeout(() => {
+        bubble.style.opacity = 1;
+        bubble.style.transform = 'translateY(0)';
+        chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
+      }, 50);
+    }, 2000);
+}
+
 // CTA Email submit
-emailButton.addEventListener("click", () => {
+emailButton.addEventListener("click", () => 
+{
+  // const API_URL = "http://localhost:5221/api/interest";
+  const API_URL = "https://expressionofinterestapi.azurewebsites.net/api/interest";
+
   const email = emailInput.value.trim();
   if(!email){ emailMsg.textContent="Please enter a valid email."; return; }
   emailMsg.textContent="Submitting..."; emailButton.disabled=true;
 
-  // const API_URL = "http://localhost:5221/api/interest";
-  const API_URL = "https://expressionofinterestapi.azurewebsites.net/api/interest";
+
  
-  fetch(API_URL, {
+  fetch(API_URL, 
+  {
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({email})
   })
   .then(res=>{ if(!res.ok)throw new Error("Network response was not ok"); return res.json(); })
-  .then(data=>{ emailMsg.textContent="Email submitted successfully!"; emailInput.value=""; emailButton.disabled=false; console.log("API response:",data); })
+  .then(data=>{ emailMsg.textContent="Email submitted successfully!"; emailInput.value=""; emailButton.disabled=false; console.log("API response:",data); addMessageToChatAfterSubmit();  })
   .catch(err=>{ emailMsg.textContent="Failed to submit email. Try again."; emailButton.disabled=false; console.error(err); });
-});
+
+}); 
+
+
 </script>
 </body>
 </html>
