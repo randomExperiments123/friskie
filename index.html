@@ -50,12 +50,12 @@
   --error-color:rgb(226, 24, 24);
 
   --email-background-color: var(--accent-color-30);
-  --email-input-border-color: var(--email-background-color);
+  --submit-input-border-color: var(--email-background-color);
   --email-message-color: var(--success-color);
-  --email-button-color: #fff;
-  --email-button-background-color: var(--email-background-color);
-  --email-button-hover-color: #019875;
-  --email-button-active-color: #017f5b;
+  --submit-button-color: #fff;
+  --submit-button-background-color: var(--email-background-color);
+  --submit-button-hover-color: #019875;
+  --submit-button-active-color: #017f5b;
   
   --chat-left-color: #000;
   --chat-left-background-color: #ffe6f0;
@@ -101,7 +101,7 @@ body
 .brand { font-size: 2rem; margin: 0; text-align:center;}
 .tagline { font-size: 1rem; margin: 5px 0; text-align:center;}
 .social-proof { font-size: 0.85rem; color: var(--social-proof-color); margin-bottom: 0px; margin-block-start: 0em; text-align:center;}
-.free-note { font-size: 0.85rem; color: var(--free-note-color); margin-bottom: 15px; margin-block-start: 0em; text-align:center;}
+.free-note { font-weight: bold; font-size: 0.85rem; color: var(--free-note-color); margin-bottom: 15px; margin-block-start: 0em; text-align:center;}
 
 #chat-window 
 {
@@ -175,7 +175,7 @@ body
   40% { transform: translateY(-6px); }
 }
  
-.email-container 
+.submit-container 
 {
   width:100%;
 
@@ -187,24 +187,24 @@ body
   padding-top:15px;
 }
 
-.email-container input 
+.submit-container input 
 {  
   padding: 12px; 
   width: 100%;  
   border-radius: 10px; 
-  border: 1px solid var(--email-input-border-color);
+  border: 1px solid var(--submit-input-border-color);
   font-size: 1rem;
   box-sizing: border-box;
 }
  
 
-.email-container button 
+.submit-container button 
 {  
   padding: 12px 25px;
   border: none; 
   border-radius: 10px; 
-  background: var(--email-button-background-color); 
-  color: var(--email-button-color); 
+  background: var(--submit-button-background-color); 
+  color: var(--submit-button-color); 
   font-weight: 600; 
   cursor: pointer; 
   font-size: 1rem;
@@ -212,14 +212,14 @@ body
   width: 100%;
 }
 
-.email-container button:hover 
+.submit-container button:hover 
 { 
-  background: var(--email-button-hover-color); 
+  background: var(--submit-button-hover-color); 
   transform: translateY(-2px); 
 }
-.email-container button:active 
+.submit-container button:active 
 { 
-  background: var(--email-button-active-color); 
+  background: var(--submit-button-active-color); 
   transform: translateY(0); 
 }
 
@@ -232,22 +232,22 @@ body
     min-height: 600px;
   }
 
-  .email-container 
+  .submit-container 
   { 
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px; 
   }
  
-  .email-container input { width: 100%; font-size:1.05rem;}
-  .email-container button { width: auto; font-size:1rem;}
+  .submit-container input { width: 100%; font-size:1.05rem;}
+  .submit-container button { width: auto; font-size:1rem;}
 
-  .email-msg 
+  .submit-status-msg 
   {  
     grid-column: span 3;
   }
 }
 
-.email-msg 
+.submit-status-msg 
 {    
   color: var(--email-message-color); 
   margin-top: 5px; 
@@ -271,11 +271,11 @@ footer.footer
     <h1 class="brand">Get friskie</h1>
     <p class="tagline">Naughty, fun, flirty, no-strings-attached...</p>
     <p class="social-proof">🔥 people near you are active</p>
-    <p class="free-note">✨ 100% free to join</p>
+    <p class="free-note">🎁 100% free to join</p>
 
     <div id="chat-window"></div>
 
-    <div id="email-container" class="email-container">
+    <div id="submit-container" class="submit-container">
       <input 
         type="text" 
         id="name-input" 
@@ -290,9 +290,9 @@ footer.footer
         aria-label="Email address" 
       />
 
-      <button id="email-button">Get friskie — it’s free</button>
+      <button id="submit-button">Get friskie — it’s free</button>
 
-      <p id="email-msg" class="email-msg" aria-live="polite"></p>
+      <p id="submit-status-msg" class="submit-status-msg" aria-live="polite"></p>
     </div>
 
     <footer class="footer">
@@ -329,8 +329,8 @@ const conversations = [
 const chatWindow = document.getElementById("chat-window");
 const nameInput = document.getElementById("name-input");
 const emailInput = document.getElementById("email-input");
-const emailButton = document.getElementById("email-button");
-const emailMsg = document.getElementById("email-msg");
+const emailButton = document.getElementById("submit-button");
+const emailMsg = document.getElementById("submit-status-msg");
 
 const convo = conversations[Math.floor(Math.random()*conversations.length)];
 let index = 0;
@@ -388,14 +388,14 @@ emailButton.addEventListener("click", () =>
 {
   //Reset the colour to success
   cssRoot.style.setProperty('--email-message-color', 'var(--success-color)');
-  cssRoot.style.setProperty('--email-input-border-color', 'var(--email-background-color)'); 
+  cssRoot.style.setProperty('--submit-input-border-color', 'var(--email-background-color)'); 
 
   const name=nameInput.value.trim();
   if(!name)
   {
     //Change the colour to error and show message
     cssRoot.style.setProperty('--email-message-color', 'var(--error-color)');
-    cssRoot.style.setProperty('--email-input-border-color', 'var(--error-color)'); 
+    cssRoot.style.setProperty('--submit-input-border-color', 'var(--error-color)'); 
 
     emailMsg.textContent="Sure be mysterious, but at least tell us your name...😉";
     return; 
@@ -406,7 +406,7 @@ emailButton.addEventListener("click", () =>
   {
     //Change the colour to error and show message
     cssRoot.style.setProperty('--email-message-color', 'var(--error-color)');
-    cssRoot.style.setProperty('--email-input-border-color', 'var(--error-color)'); 
+    cssRoot.style.setProperty('--submit-input-border-color', 'var(--error-color)'); 
 
     emailMsg.textContent = 'Please enter a valid email.';
     return;
