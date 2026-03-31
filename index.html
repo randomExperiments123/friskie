@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Get friskie!</title>
-<meta name="description" content="Time to get friskie! Naughty, fun, flirty, no-strings-attached adult chat experience. Join singles near you today.">
+<meta name="description" content="Time to get friskie! Naughty, fun, flirty, no-strings-attached adult chat experience. Join singles near you today. 100% free to join.">
 <meta name="keywords" content="adult chat, flirty dating, hookup, casual dating, no-strings-attached, flirt online">
 <meta name="robots" content="index, follow">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -31,6 +31,7 @@
 <style>
 :root 
 {
+
   --primary-color: #ff3366;
   --secondary-color: #6633ff;
   /* --accent-color: #00b894;  */
@@ -42,10 +43,11 @@
   --hero-background-color: #fff; 
   --text-color: #333;
 
+  --free-note-color: var(--primary-color);
   --social-proof-color: var(--primary-color);
 
   --success-color: var(--accent-color-30);
-  --error-color:var(--primary-color);
+  --error-color:rgb(226, 24, 24);
 
   --email-background-color: var(--accent-color-30);
   --email-input-border-color: var(--email-background-color);
@@ -98,7 +100,8 @@ body
 
 .brand { font-size: 2rem; margin: 0; text-align:center;}
 .tagline { font-size: 1rem; margin: 5px 0; text-align:center;}
-.social-proof { font-size: 0.85rem; color: var(--social-proof-color); margin-bottom: 15px; text-align:center;}
+.social-proof { font-size: 0.85rem; color: var(--social-proof-color); margin-bottom: 0px; margin-block-start: 0em; text-align:center;}
+.free-note { font-size: 0.85rem; color: var(--free-note-color); margin-bottom: 15px; margin-block-start: 0em; text-align:center;}
 
 #chat-window 
 {
@@ -171,22 +174,21 @@ body
   0%, 80%, 100% { transform: translateY(0); }
   40% { transform: translateY(-6px); }
 }
-
+ 
 .email-container 
-{ 
-  margin-top: 10px; 
-  width: 100%; 
-  display: grid;
-  grid-template-columns: 1fr; 
-  gap: 10px;
-  justify-items: stretch;
-  align-items: center;
-  border-top: 1px solid #eee; 
-  padding-top: 15px;
+{
+  width:100%;
+
+  display:grid; 
+  grid-template-columns: 1fr;
+  gap:10px;
+  
+  border-top:1px solid #eee;
+  padding-top:15px;
 }
 
 .email-container input 
-{ 
+{  
   padding: 12px; 
   width: 100%;  
   border-radius: 10px; 
@@ -197,7 +199,7 @@ body
  
 
 .email-container button 
-{ 
+{  
   padding: 12px 25px;
   border: none; 
   border-radius: 10px; 
@@ -222,6 +224,7 @@ body
 }
 
  
+ /* Desktop layout */
 @media (min-width: 768px) 
 {
   .hero-card 
@@ -229,20 +232,34 @@ body
     min-height: 600px;
   }
 
-  .email-container { 
-    grid-template-columns: 1fr auto;
-    gap: 15px;
+  .email-container 
+  { 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px; 
   }
+ 
   .email-container input { width: 100%; font-size:1.05rem;}
   .email-container button { width: auto; font-size:1rem;}
+
+  .email-msg 
+  {  
+    grid-column: span 3;
+  }
 }
 
-.email-msg { color: var(--email-message-color); margin-top: 5px; font-size: 0.9rem; width: 100%; text-align: center; }
+.email-msg 
+{    
+  color: var(--email-message-color); 
+  margin-top: 5px; 
+  font-size: 0.9rem; 
+  width: 100%; 
+  text-align: center; 
+}
 
 footer.footer 
 { 
   font-size: 0.75rem; 
-  margin-top: 10px; 
+  margin-top: 0px; 
   color: var(--footer-color); 
   text-align: center;
 }
@@ -254,12 +271,27 @@ footer.footer
     <h1 class="brand">Get friskie</h1>
     <p class="tagline">Naughty, fun, flirty, no-strings-attached...</p>
     <p class="social-proof">🔥 people near you are active</p>
+    <p class="free-note">✨ 100% free to join</p>
 
     <div id="chat-window"></div>
 
     <div id="email-container" class="email-container">
-      <input type="email" id="email-input" placeholder="Your email to continue..." aria-label="Email address" />
-      <button id="email-button">Get friskie</button>
+      <input 
+        type="text" 
+        id="name-input" 
+        placeholder="Your name..." 
+        aria-label="Name" 
+      />
+
+      <input 
+        type="email" 
+        id="email-input" 
+        placeholder="email" 
+        aria-label="Email address" 
+      />
+
+      <button id="email-button">Get friskie — it’s free</button>
+
       <p id="email-msg" class="email-msg" aria-live="polite"></p>
     </div>
 
@@ -272,6 +304,10 @@ footer.footer
 
 <!-- Inline JS -->
 <script>
+//const API_URL = "http://localhost:5221/api/interest";
+const API_URL = "https://expressionofinterestapi.azurewebsites.net/api/interest";
+ 
+
 var cssRoot = document.querySelector(':root');
 
 const conversations = [
@@ -291,6 +327,7 @@ const conversations = [
 ];
 
 const chatWindow = document.getElementById("chat-window");
+const nameInput = document.getElementById("name-input");
 const emailInput = document.getElementById("email-input");
 const emailButton = document.getElementById("email-button");
 const emailMsg = document.getElementById("email-msg");
@@ -349,12 +386,20 @@ function addMessageToChatAfterSubmit()
 // CTA Email submit
 emailButton.addEventListener("click", () => 
 {
-  // const API_URL = "http://localhost:5221/api/interest";
-  const API_URL = "https://expressionofinterestapi.azurewebsites.net/api/interest";
- 
   //Reset the colour to success
   cssRoot.style.setProperty('--email-message-color', 'var(--success-color)');
   cssRoot.style.setProperty('--email-input-border-color', 'var(--email-background-color)'); 
+
+  const name=nameInput.value.trim();
+  if(!name)
+  {
+    //Change the colour to error and show message
+    cssRoot.style.setProperty('--email-message-color', 'var(--error-color)');
+    cssRoot.style.setProperty('--email-input-border-color', 'var(--error-color)'); 
+
+    emailMsg.textContent="Sure be mysterious, but at least tell us your name...😉";
+    return; 
+  }
 
   const email = emailInput.value.trim();
   if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) 
@@ -373,11 +418,11 @@ emailButton.addEventListener("click", () =>
   {
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({email})
+    body:JSON.stringify({name,email})
   })
   .then(res=>{ if(!res.ok)throw new Error("Network response was not ok"); return res.json(); })
-  .then(data=>{ emailMsg.textContent="Email submitted successfully!"; emailInput.value=""; emailButton.disabled=false; console.log("API response:",data); addMessageToChatAfterSubmit();  })
-  .catch(err=>{ emailMsg.textContent="Failed to submit email. Try again."; emailButton.disabled=false; console.error(err); });
+  .then(data=>{ emailMsg.textContent="Submitted successfully!"; emailInput.value=""; emailButton.disabled=false; console.log("API response:",data); addMessageToChatAfterSubmit();  })
+  .catch(err=>{ emailMsg.textContent="Failed to submit. Try again."; emailButton.disabled=false; console.error(err); });
 
 }); 
 
