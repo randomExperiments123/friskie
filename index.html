@@ -44,9 +44,12 @@
 
   --social-proof-color: var(--primary-color);
 
+  --success-color: var(--accent-color-30);
+  --error-color:var(--primary-color);
+
   --email-background-color: var(--accent-color-30);
   --email-input-border-color: var(--email-background-color);
-  --email-message-color: var(--accent-color-30);
+  --email-message-color: var(--success-color);
   --email-button-color: #fff;
   --email-button-background-color: var(--email-background-color);
   --email-button-hover-color: #019875;
@@ -269,6 +272,8 @@ footer.footer
 
 <!-- Inline JS -->
 <script>
+var cssRoot = document.querySelector(':root');
+
 const conversations = [
   [
     { side: "left", text: "Hey there 😉" },
@@ -346,12 +351,18 @@ emailButton.addEventListener("click", () =>
 {
   // const API_URL = "http://localhost:5221/api/interest";
   const API_URL = "https://expressionofinterestapi.azurewebsites.net/api/interest";
+ 
+  cssRoot.style.setProperty('--email-message-color', 'var(--success-color)');
 
   const email = emailInput.value.trim();
-  if(!email){ emailMsg.textContent="Please enter a valid email."; return; }
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) 
+  {
+    cssRoot.style.setProperty('--email-message-color', 'var(--error-color)');
+    emailMsg.textContent = 'Please enter a valid email.';
+    return;
+  }
+ 
   emailMsg.textContent="Submitting..."; emailButton.disabled=true;
-
-
  
   fetch(API_URL, 
   {
