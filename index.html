@@ -46,7 +46,7 @@
 
   --email-background-color: var(--accent-color-30);
   --email-input-border-color: var(--email-background-color);
-  --email-message-color: var(--primary-color);
+  --email-message-color: var(--accent-color-30);
   --email-button-color: #fff;
   --email-button-background-color: var(--email-background-color);
   --email-button-hover-color: #019875;
@@ -324,8 +324,9 @@ emailButton.addEventListener("click", () => {
   if(!email){ emailMsg.textContent="Please enter a valid email."; return; }
   emailMsg.textContent="Submitting..."; emailButton.disabled=true;
 
-  const API_URL = "https://your-api-endpoint.com/submit-email"; // Replace with your API
-
+  // const API_URL = "http://localhost:5221/api/interest";
+  const API_URL = "https://expressionofinterestapi.azurewebsites.net/api/interest";
+ 
   fetch(API_URL, {
     method:"POST",
     headers:{"Content-Type":"application/json"},
