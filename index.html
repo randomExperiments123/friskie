@@ -352,12 +352,17 @@ emailButton.addEventListener("click", () =>
   // const API_URL = "http://localhost:5221/api/interest";
   const API_URL = "https://expressionofinterestapi.azurewebsites.net/api/interest";
  
+  //Reset the colour to success
   cssRoot.style.setProperty('--email-message-color', 'var(--success-color)');
+  cssRoot.style.setProperty('--email-input-border-color', 'var(--email-background-color)'); 
 
   const email = emailInput.value.trim();
   if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) 
   {
+    //Change the colour to error and show message
     cssRoot.style.setProperty('--email-message-color', 'var(--error-color)');
+    cssRoot.style.setProperty('--email-input-border-color', 'var(--error-color)'); 
+
     emailMsg.textContent = 'Please enter a valid email.';
     return;
   }
